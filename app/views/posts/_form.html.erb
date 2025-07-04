@@ -1,0 +1,48 @@
+<div class="col-xl-4 col-md-6 col-sm-8 col-10" style="margin: auto; background-color: #f8f8f8; border-raidus: 10px; padding: 15px bos-shadow: 0px 0px 2px 2px (255, 255, 255, 0.1)">
+  <h1>New post</h1>
+  <%= form_with(model: post) do |form| %>
+
+  <% invalid = post.errors.include?(:title) %>
+    <div>
+      <%= form.text_field :user_id, class: 'form-control', type: "hidden", value: current_user.id %>
+    </div>
+  <% if invalid %>
+  <p style="color: red;">
+    <%= post.errors.full_messages_for(:title).join(" ,") %>
+  </p>
+  <% end %>
+
+  <div>
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title, class: 'form-control' %>
+    </div>
+
+  <% invalid = post.errors.include?(:description) %>
+    <div>
+      <%= form.label :description, style: "display: block" %>
+      <%= form.text_field :description, class: 'form-control' %>
+    </div>
+  <% if invalid %>
+  <p style="color: red;">
+    <%= post.errors.full_messages_for(:description).join(" ,") %>
+  </p>
+  <% end %>
+
+  <% invalid = post.errors.include?(:keywords) %>
+    <div>
+      <%= form.label :keywords, style: "display: block" %>
+      <%= form.text_field :keywords, class: 'form-control' %>
+    </div>
+  <% if invalid %>
+  <p style="color: red;">
+    <%= post.errors.full_messages_for(:keywords).join(" ,") %>
+  </p>
+  <% end %>
+
+  <%= form.file_field :images, multiple:true, style: "margin-top: 10px; margin-bottom: 10px" %>
+    <div>
+      <%= form.submit class: 'btn btn-primary col-12' %>
+    </div>
+  <% end %>
+
+</div>
