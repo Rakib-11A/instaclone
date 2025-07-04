@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
+
+  resources :comments
   devise_scope :user do
     get '/users', to: 'devise/registration#new'
     get '/users/password', to: 'devise/password#new'
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
-  devise_for :users
+  devise_for :users, controllers: {
+        registrations: 'users/registrations'
+      }
+
+  resources :users, only: [:show]
   get "home/about"
+  get "posts/myposts"
   resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

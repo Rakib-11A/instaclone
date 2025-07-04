@@ -9,6 +9,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comment = @post.comments.build
   end
 
   # GET /posts/new
@@ -18,6 +19,11 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+  end
+
+  # GET /posts/
+  def myposts
+    @posts = Post.all
   end
 
   # POST /posts or /posts.json

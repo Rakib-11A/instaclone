@@ -4,7 +4,8 @@ class Post < ApplicationRecord
     validates :keywords, presence: true, length: {minimum: 2, maximum:25}
 
     has_many_attached :images
-    belongs_to :User
+    belongs_to :user
+    has_many :comments
 
     before_create :randomize_id
          private
