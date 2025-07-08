@@ -5,7 +5,7 @@
 <% content_for :title, "Posts" %>
 
 
-<div id="posts" class="text-center ">
+<div id="posts" class="text-center">
   <% @posts.each do |post| %>
     <% if post.user.id == current_user.id%>
         <%= render post %>

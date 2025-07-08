@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-xl-4 col-md-6 col-sm-8 col-10" style="margin: auto; background-color: #f8f8f8; border-radius: 10px; padding: 15px; box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.1)">
+    <div class="text-center">
+      <h3> Total likes : <%= @post.liked_users.count %></h3>
+      <% @post.liked_users.each do |user| %>
+        <%= user.email %><br>
+      <% end %>
+    </div>
+  </div>
+</div>

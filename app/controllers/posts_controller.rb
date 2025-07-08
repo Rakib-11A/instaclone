@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy liked_user]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /posts or /posts.json
@@ -10,6 +10,10 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show
     @comment = @post.comments.build
+  end
+
+  def liked_user
+    # @post = Post.find(params[:id])
   end
 
   # GET /posts/new

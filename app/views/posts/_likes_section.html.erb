@@ -7,5 +7,7 @@
             <%= button_to "Unlike", like_path(like), method: :delete, data: { turbo: true }, remote: true%>
         <% end %>
     <% end %>
-    <p> <%= post.likes.count %> likes </p>
+    <p> <%= link_to "#{post.likes.count} likes", liked_users_path(post.id) %>
+
+    </p>
 </div>

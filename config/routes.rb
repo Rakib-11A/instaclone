@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   get "home/about"
   get "posts/myposts"
+  get "posts/:id/liked_user", to: 'posts#liked_user', as: :liked_users
   resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

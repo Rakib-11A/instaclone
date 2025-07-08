@@ -14,9 +14,8 @@
   </p>
 
 </div>
-<%= turbo_frame_tag "like_listener_#{post.id}" do %>
-  <%= render partial: "posts/likes_section", locals: { post: post } %>
-<% end %>
+
+<%= render partial: "posts/likes_section", locals: { post: post } %>
 <p>
     <%= link_to post.user.username, post.user, style: "z-index:"%>
 </p>
