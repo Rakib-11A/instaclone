@@ -1,9 +1,13 @@
 <div class="row">
-    <div class="col-xl-4 col-md-6 col-sm-8 col-10" style="margin: auto; background-color: #f8f8f8; border-raidus: 10px; padding: 15px bos-shadow: 0px 0px 2px 2px (255, 255, 255, 0.1)">
+    <div class="col-xl-4 col-md-6 col-sm-8 col-10" style="margin: auto; background-color: #f8f8f8; border-radius: 10px; padding: 15px; box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.1)">
     <div class="text-center">
+        <% if @user.avatar.attached? %>
+            <%= image_tag(@user.avatar, style: "width: 50px; height: 50px; border-radius: 50%;") %>
+        <% end %>
         <h1><%= @user.username%></h1>
         <h4><%= @user.email %></h4>
         <p><%= @user.description%></p>
     </div>
     </div>
 </div>
+

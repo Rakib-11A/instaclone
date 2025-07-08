@@ -1,6 +1,7 @@
+
 <div id="<%= dom_id post %>" class="post-container">
   <p>
-    <%= link_to "", post, class: "post-link"%>
+    <%= link_to "", post, class: "post-link" %>
   </p>
   <p>
     <% post.images.each do |image| %>
@@ -11,9 +12,14 @@
   <p>
     <%= post.title%>
   </p>
+
 </div>
+<%= turbo_frame_tag "like_listener_#{post.id}" do %>
+  <%= render partial: "posts/likes_section", locals: { post: post } %>
+<% end %>
 <p>
-    <%#= link_to post.user.username, post.user, class: "post-link"%>
-</p> 
+    <%= link_to post.user.username, post.user, style: "z-index:"%>
+</p>
+
 
 

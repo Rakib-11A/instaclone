@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@post, :like_section) do %>
+    <%= render partial: "posts/likes_section", locals: { post: @post } %>
+<% end %>

@@ -5,7 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
          has_many :posts
-
+         has_one_attached :avatar
+         has_many :likes
+        
          before_create :randomize_id
          
          private
