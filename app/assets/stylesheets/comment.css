@@ -1,0 +1,21 @@
+.comment-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.comment-actions {
+    margin-top: 10px;
+}
+
+.reply-form {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.comment-text {
+    white-space: pre-wrap;
+}

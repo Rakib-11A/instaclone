@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :likes, only: [:create, :destroy]
-  resources :comments
   
   devise_scope :user do
     get '/users', to: 'devise/registration#new'
@@ -15,7 +14,12 @@ Rails.application.routes.draw do
   get "home/about"
   get "posts/myposts"
   get "posts/:id/liked_user", to: 'posts#liked_user', as: :liked_users
-  resources :posts
+
+  resources :posts do
+    resources :comments, only: [:create, :destroy]
+  end
+
+  resources :comments, except: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

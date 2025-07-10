@@ -1,23 +1,35 @@
-<p style="color: green"><%= notice %></p>
+<div class="col-xl-10 col-md-6 col-sm-8 col-10" style="margin: auto; background-color: #f8f8f8; border-radius: 10px; padding: 15px; box-shadow: 0px 0px 2px 2px rgba(255, 255, 255, 0.1)">
 
+<p style="color: green"> <%= notice %></p>
 <%= render @post %>
 
-<%= render "comments/form", comment: @comment %>  
-<% @post.comments.each do |comment| %>
-  <%= comment.text%>
-  <br>
-<% end %>
+<div class=" comments-section mt-5">
+  <h4> Comments (<%= @post.comments.count %>)</h4>
 
-<%= link_to "Back to posts", posts_path %>
-
-<% if user_signed_in?%>
-  <% if current_user.id == @post.user.id %>
-    <div>
-      <%= link_to "Edit this post", edit_post_path(@post) %> |
-
-      <%= button_to "Destroy this post", @post, method: :delete %>
+  <!-- New comment form (for top-level comments -->
+  <% if user_signed_in? %>
+    <%= render "comments/form", post: @post, comment: @comment %>
+  <% else %>
+    <div class="alert alert-info">
+      please <%= link_to "sign in", new_user_session_path %> to leave a comment.
     </div>
-<% end %>
+  <% end %>
+
+  <!-- Comments list -->
+  <div class="comments-list">
+    <%= render partial: "comments/comment", collection: @post.comments.order(created_at: :desc), as: :comment %>
+  </div>
+</div>
+
+<%= link_to "Back to posts", posts_path, class: "btn btn-secondary mt-3" %>
+
+<% if user_signed_in? && current_user.id == @post.user.id %>
+  <div class="post-action mt-3">
+    <%= link_to "Edit this post", edit_post_path(@post),
+                class: "btn btn-outline-primary"
+    %>
+    <%= button_to "Destroy this post", @post, method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-outline-danger" %>
+  </div>
 <% end %>
 
-
+</div>

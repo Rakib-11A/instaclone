@@ -1,0 +1,13 @@
+<% if @comment.parent_id.nil? %>
+  <%= turbo_stream.prepend "comments-list"do %>
+    <%= render partial: "comments/comment", locals: { comment: @comment} %>
+  <% end %>
+  <% else %>
+    <%= turbo_stream.append "replies-for-comment-#{@comment.parent_id}" do %>
+      <%= render partial: "comments/comment", locals: {comment: @comment} %>
+    <% end %>
+<% end %>
+
+<%= turbo_stream.replace "new_comment" do %>
+  <%= render partial: "comments/form", locals: {post: @post, comment: Comment.new} %>
+<% end %>

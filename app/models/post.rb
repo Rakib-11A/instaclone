@@ -5,9 +5,16 @@ class Post < ApplicationRecord
 
     has_many_attached :images
     belongs_to :user
-    has_many :comments
+
+    has_many :comments, -> { where(parent_id: nil) }, dependent: :destroy
+    has_many :all_comments, class_name: "Comment", foreign_key: :parent_id, dependent: :destroy
+
     has_many :likes
     has_many :liked_users, through: :likes, source: :user
+
+    def comments_count
+      comments.size
+    end
     before_create :randomize_id
          private
          def randomize_id

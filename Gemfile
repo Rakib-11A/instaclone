@@ -65,3 +65,5 @@ end
 gem "dartsass-rails"
 gem "bootstrap", "~> 5.3.3"
 gem 'devise', '~> 4.9', '>= 4.9.4'
+gem 'image_processing', '~> 1.2'
+gem 'ruby-vips'

@@ -17,7 +17,7 @@
 
 <%= render partial: "posts/likes_section", locals: { post: post } %>
 <p>
-    <%= link_to post.user.username, post.user, style: "z-index:"%>
+    <%= link_to  post.user.username, post.user , style: "z-index:", class: "btn btn-sm btn-outline-primary"%>
 </p>
 
 

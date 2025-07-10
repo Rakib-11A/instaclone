@@ -5,9 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
          has_many :posts
+         has_many :comments, dependent: :destroy
          has_one_attached :avatar
          has_many :likes
          has_many :liked_posts, through: :likes, source: :post
+
 
          before_create :randomize_id
          
