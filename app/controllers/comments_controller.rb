@@ -29,7 +29,13 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.turbo_stream
+        format.turbo_stream do
+          if @comment.parent_id.present?
+            render turbo_stream: [
+              turbo_stream.append(partial: "comments/comment", locals: { comment: @comment }),
+            ]
+          end
+        end
         format.html { redirect_to @post, notice: "Comment was successfully created." }
         format.json { render :show, status: :created, location: @comment }
       else
