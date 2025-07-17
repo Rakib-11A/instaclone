@@ -21,9 +21,4 @@
     <%= render partial: "comments/comment", collection: @post.comments.where(parent_id: nil).order(:created_at), as: :comment %>
   </div>
 
-
-
-
-
-
 </div>

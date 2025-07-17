@@ -5,9 +5,12 @@
   <div class="mb-3">
     <%= form.text_area :text, class: "form-control", rows: 3, placeholder: "Write your comment..." %>
   </div>
-
-  <%= form.submit "Post Comment", class: "btn btn-primary" %>
-  <% if comment.parent_id.present? %>
-    <%= link_to "Cancel", "#", data: { action: "click->reply#toggle", comment_id: comment.parent_id }, class: "btn btn-secondary" %>
-  <% end %>
+  <div class="d-flex">
+    <%= form.submit "Post Comment", class: "btn btn-primary " %>
+    <% if comment.parent_id.present? %>
+      <div data-controller="reply" style="padding-left: 8px;">
+        <%= link_to "Cancel", "#", data: { action: "click->reply#toggle", comment_id: comment.parent_id }, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
