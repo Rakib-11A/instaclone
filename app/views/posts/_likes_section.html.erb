@@ -1,13 +1,18 @@
 <div id="<%= dom_id(post, :like_section)%>" >
-    <% if user_signed_in? %>
+  <div class="d-flex align-content-center">
+    <div class="px-2">
+      <% if user_signed_in? %>
         <% like = current_user.likes.find_by(post: post) %>
         <% if like.nil? %>
-            <%= button_to "Like", likes_path, params: {like: { post_id: post.id } }, method: :post, data: {turbo: true}, remote: true, class: "btn btn-primary mb-2 btn-sm" %>
+          <%= button_to "Like", likes_path, params: {like: { post_id: post.id } }, method: :post, data: {turbo: true}, remote: true, class: "btn btn-primary mb-2 btn-sm" %>
         <% else %>
-            <%= button_to "Unlike", like_path(like), method: :delete, data: { turbo: true }, remote: true, class: "btn btn-sm btn-danger mb-2"%>
+          <%= button_to "Unlike", like_path(like), method: :delete, data: { turbo: true }, remote: true, class: "btn btn-sm btn-danger mb-2"%>
         <% end %>
-    <% end %>
-    <p> <%= link_to "#{post.likes.count} likes", liked_users_path(post.id), class: "btn btn-sm btn-info" %>
-
+      <% end %>
+    </div>
+    <p>
+      <%= link_to "#{post.likes.count} likes", liked_users_path(post.id), class: "btn btn-sm btn-info" %>
     </p>
+
+  </div>
 </div>

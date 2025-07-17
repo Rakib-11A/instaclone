@@ -27,34 +27,25 @@ class CommentsController < ApplicationController
     @comment = @post.comments.new(comment_params)
     @comment.user = current_user
 
-    respond_to do |format|
-      if @comment.save
-        format.turbo_stream do
-          if @comment.parent_id.present?
-            render turbo_stream: [
-              turbo_stream.append(partial: "comments/comment", locals: { comment: @comment }),
-            ]
-          end
-        end
-        format.html { redirect_to @post, notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+    if @comment.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @post, notice: "Comment posted!" }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_form", partial: "comments/form", locals: {comment: @comment, post: @post}) }
+        format.html { render :new}
       end
     end
   end
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: "Comment was successfully updated." }
-        format.json { render :show, status: :ok, location: @comment }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.update(comment_params)
+      redirect_to @comment.post, notice: "Comment updated!"
+    else
+      render :edit
     end
   end
 
@@ -63,8 +54,8 @@ class CommentsController < ApplicationController
     @comment.destroy!
 
     respond_to do |format|
-      format.html { redirect_to comments_path, status: :see_other, notice: "Comment was successfully destroyed." }
-      format.json { head :no_content }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@comment)) }
+      format.html { redirect_to @comment.post, notice: "Comment deleted!" }
     end
   end
 
@@ -81,7 +72,7 @@ class CommentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def comment_params
       # params.require(:comment).permit(:text, :user_id, :post_id, :parent_id)
-      params.require(:comment).permit(:text, :parent_id)
+      params.require(:comment).permit(:text, :post_id, :parent_id)
     end
 
 end
