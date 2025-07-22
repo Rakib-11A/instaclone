@@ -1,0 +1,17 @@
+<%= turbo_frame_tag dom_id(likeable, "likes") do %>
+  <% if likeable.likes.exists?(user: current_user) %>
+    <% like = likeable.likes.find_by(user: current_user) %>
+    <%= button_to "Liked (#{likeable.likes.count})",
+                  # like_path(id: likeable.likes.find_by(user: current_user)&.id, likeable_type: likeable.class.name, likeable_id: likeable.id),
+                  like_path(like),
+                  method: :delete,
+                  data: { turbo_stream: true },
+                  class: "btn btn-sm btn-primary text-white" %>
+  <% else %>
+    <%= button_to "Like (#{likeable.likes.count})",
+                  likes_path(likeable_type: likeable.class.name, likeable_id: likeable.id),
+                  method: :post,
+                  data: { turbo_stream: true },
+                  class: "btn btn-sm btn-outline-primary" %>
+  <% end %>
+<% end %>

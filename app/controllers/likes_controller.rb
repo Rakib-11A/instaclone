@@ -1,30 +1,40 @@
 class LikesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_likeable, only: :create
   def create
-    @like = current_user.likes.new(like_params)
-    @post = @like.post
-    if @like.save
-      respond_to do |format|
+     like = @likeable.likes.build(user: current_user)
+    # @like = current_user.likes.create(likeable_id: params[:likeable_id], likeable_type: params[:likeable_type])
+    #  debugger
+    respond_to do |format|
+      if like.save
         format.turbo_stream
-        format.html { redirect_to root_path, notice: "Liked!"}
+        # { render turbo_stream: turbo_stream.replace("likes_post#{@likeable.id}"), partial: "likes/like_button", locals: { likeable: @likeable}}
+        # format.html { redirect_back fallback_location: root_path, notice: "Liked!"}
+      else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@likeable, "likes"), partial: "likes/like_button", locals: { likeable: @likeable})}
       end
-    else  
-      format.html { redirect_to root_path, alert: "You have already liked this post!"}
     end
-    
   end
 
   def destroy
-    @like = current_user.likes.find(params[:id])
-    @post = @like.post
-    @like.destroy
+    like = Like.find(params[:id])
+    @likeable = like.likeable
+    like.destroy
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to root_path, notice: "Unliked!"}
+      # format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@likeable,"likes"), partial: "like/like_button", locals: { likeable: likeable})}
+      format.html { redirect_back fallback_location: root_path, notice: "Unliked"}
     end
+
   end
 
-  def like_params
-    params.require(:like).permit(:post_id)
+  private
+  # def find_likeable
+  #   params[:likeable_type].constantize.find(params[:likeable_id])
+  # end
+  def set_likeable
+    kclass = params[:likeable_type].constantize rescue nil
+    @likeable = kclass.find_by(id: params[:likeable_id]) if kclass
   end
 end

@@ -5,7 +5,7 @@
 
   <!-- app/views/posts/show.html.erb -->
   <h2><%= @post.title %></h2>
-<!--  <p><%#= @post.body %></p>-->
+  <p><%= @post.description %></p>
 
   <h4>Comments (<%= @post.comments.count %>)</h4>
 
@@ -20,10 +20,5 @@
   <div id="replies_post_<%= @post.id %>">
     <%= render partial: "comments/comment", collection: @post.comments.where(parent_id: nil).order(:created_at), as: :comment %>
   </div>
-
-
-
-
-
 
 </div>

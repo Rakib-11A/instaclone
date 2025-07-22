@@ -9,8 +9,7 @@ class Post < ApplicationRecord
     has_many :comments, -> { where(parent_id: nil) }, dependent: :destroy
     has_many :all_comments, class_name: "Comment", foreign_key: :parent_id, dependent: :destroy
 
-    has_many :likes
-    has_many :liked_users, through: :likes, source: :user
+    has_many :likes, as: :likeable, dependent: :destroy
 
     def comments_count
       comments.size
