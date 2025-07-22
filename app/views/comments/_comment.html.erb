@@ -14,16 +14,8 @@
     <div data-controller="reply" style="margin-right: 8px">
       <%= link_to "Reply", "#", class: "btn btn-sm btn-outline-secondary", data: { action: "click->reply#toggle", comment_id: comment.id } %>
     </div>
-    <div data-controller="reply">
-      <%= link_to "Like", "#",
-                  class: "btn btn-sm btn-outline-primary",
-                  id: "like-button-#{comment.id}",
-                  data: {
-                    action: "click->reply#likeToggle",
-                    comment_id: comment.id
-                  }
-      %>
-    </div>
+    <!-- like button -->
+    <%= render "likes/like_button", likeable: comment %>
   </div>
   <!-- Reply form hidden initially -->
   <div id="reply-form-<%= comment.id %>" style="display: none;">

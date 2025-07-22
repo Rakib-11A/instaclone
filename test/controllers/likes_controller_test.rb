@@ -10,9 +10,4 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     get likes_destroy_url
     assert_response :success
   end
-
-  test "should get like_params" do
-    get likes_like_params_url
-    assert_response :success
-  end
 end
